@@ -1,0 +1,30 @@
+<div class="container-fluid analytic-root">
+    <!-- Analytic heading -->
+    <div class="row mb-3 analytic-heading">
+        <div class="col-12 mb-2">
+            <h4 class="mb-0">Заголовок аналитики (корневой)</h4>
+        </div>
+        <div class="col-12">
+            <p class="mb-0 text-muted">Описание, в котором описано как пользоваться конструируемой таблицей, как выгружать данные в
+                формате csv и многое другое. Описание вкладок, где искать то или иное. Надо придумать этот текст.</p>
+        </div>
+    </div>
+
+    <!-- Analytic tabs -->
+    <div class="row mb-4 analytic-tabs">
+        <div class="col-12">
+            <ul class="nav nav-tabs nav-tabs-line">
+                {{#tabs}}
+                <li class="nav-item">
+                    <a class="nav-link{{#active}} active{{/active}}" href="{{ tab_url }}">
+                        <i class="icon fa {{icon}}" aria-hidden="true"></i>
+                        {{name}}
+                    </a>
+                </li>
+                {{/tabs}}
+            </ul>
+        </div>
+    </div>
+
+    {{#content}}{{{ content }}}{{/content}}
+</div>

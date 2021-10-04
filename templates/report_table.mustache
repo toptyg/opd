@@ -1,0 +1,76 @@
+<!-- Analytic tab -->
+<div class="row analytic-tab">
+    <!-- Tab content -->
+    <div class="col-12 mb-4 analytic-tab-content">
+        <!-- Table configurator -->
+        <div class="row mb-4 analytic-tab-configurator" id="analytic-configurator">
+            {{^ is_streams_tab }}
+            <!-- Select stream -->
+            <div class="col-3">
+                <select name="analytic-stream-select" id="analytic-stream-select" class="chosen-select" data-placeholder="Укажите стрим...">
+                    {{#streams}}
+                    <option value="{{ id }}" {{#selected}}selected{{/selected}}>{{ course_name }} — {{ name }}</option>
+                    {{/streams}}
+                </select>
+            </div>
+            {{/is_streams_tab}}
+            <!-- Table column configurator -->
+            {{^ is_streams_tab }}<div class="col-9">{{/is_streams_tab}}{{# is_streams_tab }}<div class="col-12">{{/is_streams_tab}}
+                {{!
+                    Этот select будет автозаполнен JS скриптом при инициализации таблицы, что важно:
+                    1. Пункты динамически соберутся согласно тем полям, которые может выводить текущая таблица
+                    2. Выбранные пункты влияют на скрытие или показ колонок таблицы
+                }}
+                <select name="analytic-columns-select" id="analytic-columns-select" class="chosen-select" multiple data-placeholder="Выберите колонки для таблицы..."></select>
+            </div>
+        </div>
+        <!-- Table -->
+        <div class="row analytic-tab-table">
+            <div class="col-12">
+                <div id="analytic-table"></div>
+            </div>
+        </div>
+
+        <!-- Analytic tab content loader -->
+        <div id="analytic-tc-loader" class="analytic-tc-loader">
+            <div class="spinner">
+                <div class="rect1"></div>
+                <div class="rect2"></div>
+                <div class="rect3"></div>
+                <div class="rect4"></div>
+                <div class="rect5"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tab actions -->
+    <div class="col-12 analytic-tab-actions">
+        <div class="row">
+            <div class="col">
+                <p class="mb-0 text-muted">
+                    Данные таблицы можно экспортировать в следующих форматах: CSV, XLSX и JSON. Для экспорта воспользуйтесь
+                    соответствующей кнопкой справа.
+                </p>
+            </div>
+            <div class="col-auto">
+                <a href="{{ url }}" class="btn btn-info" id="analytic-action-refresh">
+                    <i class="icon fa fa-refresh" aria-hidden="true"></i>
+                    Обновить
+                </a>
+                <a href="#" class="btn btn-success" id="analytic-action-csv">
+                    <i class="icon fa fa-cloud-download" aria-hidden="true"></i>
+                    Экспорт в CSV
+                </a>
+                <a href="#" class="btn btn-primary" id="analytic-action-xlsx">
+                    <i class="icon fa fa-cloud-download" aria-hidden="true"></i>
+                    Экспорт в XLSX
+                </a>
+                <a href="#" class="btn btn-warning" id="analytic-action-json">
+                    <i class="icon fa fa-cloud-download" aria-hidden="true"></i>
+                    Экспорт в JSON
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">window.analytics = window.analytics || {}; window.analytics.table_type = "{{ table_type }}";</script>

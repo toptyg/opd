@@ -1,0 +1,456 @@
+{{#title}}
+<div class="row mb-4">
+    <div class="col-12">
+        <h4>{{title}}</h4>
+    </div>
+</div>
+{{/title}}
+
+{{#disable_submit}}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Внимание!</strong> Превышен лимит на подачу заявок с вашей учетной записи.
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{{/disable_submit}}
+
+<form class="mb-4" action="{{{baseurl}}}" method="post">
+    {{#record_exists}}
+    <!-- ID заявки -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">ID заявки:</h6>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <input type="text" class="form-control" value="{{id}}" readonly>
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+    {{/record_exists}}
+
+    <!-- Тип проекта -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold mb-1">Источник проекта:</h6>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <input type="text" class="form-control" readonly value="{{source}}">
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Университет:</h6>
+            <p class="font-italic mb-0">Выберите университет, в котором обучается Руководитель проекта</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+        {{#university_errors}}
+            <div class="form-field-is-invalid">
+        {{/university_errors}}
+            <select class="w-100 custom-select{{#university_errors}} is-invalid{{/university_errors}}" name="university" required>
+                {{#university_options}}
+                    <option {{#selected}}selected="1"{{/selected}} value="{{university}}">{{university}}</option>
+                {{/university_options}}
+            </select>
+        {{#university_errors}}
+                <div class="invalid-feedback">{{university_errors}}</div>
+            </div>
+        {{/university_errors}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Институт:</h6>
+            <p class="font-italic mb-0">Выберите институт, в котором обучается Руководитель проекта</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+            {{#institute_errors}}
+                <div class="form-field-is-invalid">
+            {{/institute_errors}}
+            <select class="w-100 custom-select {{#institute_errors}} is-invalid{{/institute_errors}}" name="institute" required>
+                <option value="">Выберите институт</option>
+                {{#institute_options}}
+                    <option {{#selected}}selected{{/selected}} value="{{institute}}">{{institute}}</option>
+                {{/institute_options}}
+            </select>
+            {{#institute_errors}}
+                    <div class="invalid-feedback">{{institute_errors}}</div>
+                </div>
+            {{/institute_errors}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    {{#record_exists}}
+    <!-- Код заявки -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Код заявки:</h6>
+            <p class="font-italic mb-0">Уникальный номер заявки</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <input type="text" class="form-control" value="{{institute}}-{{id}}" readonly>
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+    {{/record_exists}}
+
+    <!-- Заказчик -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Заказчик:</h6>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <input name="customer" type="text" class="form-control" value="{{customer}}" {{^record_exists}}{{#fromopdtheme}}readonly{{/fromopdtheme}}{{/record_exists}}>
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    {{#responsible}}
+    <!-- Ответственный -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Ответственный:</h6>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <input name="responsible" type="text" class="form-control" value="{{responsible}}" {{^record_exists}}{{#fromopdtheme}}readonly{{/fromopdtheme}}{{/record_exists}}>
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+    {{/responsible}}
+
+    {{#fromopdtheme}}
+    <!-- ID темы из списка -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">ID темы из списка:</h6>
+            <p class="font-italic mb-0">Ссылка на номер темы проекта из списка</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <input type="text" class="form-control" value="{{id}}" readonly>
+            <a href="{{{url}}}" class="btn btn-primary btn-sm ml-2">Перейти</a>
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+    {{/fromopdtheme}}
+
+    <!-- Тип проекта -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Тип проекта:</h6>
+            <p class="font-italic mb-0">Укажите тип, который наиболее близко характеризует результат проекта</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            {{^type_editable}}
+            <input type="text" class="form-control" value="{{type}}" readonly>
+            {{/type_editable}}
+
+            {{#type_editable}}
+                {{#type_errors}}
+                <div class="form-field-is-invalid">
+                {{/type_errors}}
+                <select data-placeholder="Выберите тип проекта" id="project-type-mselect" class="custom-select{{#type_errors}} is-invalid{{/type_errors}}" multiple required>
+			 <option value="Технический">Технический</option>
+
+                         <option value="ИТ">ИТ</option>
+
+                         <option value="Социальный">Социальный</option>
+
+                         <option value="Организационный">Организационный</option>
+
+                         <option value="Предпринимательский">Предпринимательский</option>
+
+                         <option value="Арт-проект">Арт-проект</option>
+
+                        <option value="Прочее">Прочее</option>
+                </select>
+                <input type="hidden" name="type" value="{{type}}" id="project-type-mselect-hidden">
+                {{#type_errors}}<div class="invalid-feedback">{{type_errors}}</div>
+                </div>{{/type_errors}}
+            {{/type_editable}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Название проекта -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Название проекта:</h6>
+            <p class="font-italic mb-0">Введите краткое название (до 10 слов), отражающее суть проекта</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+            {{#name_errors}}
+                <div class="form-field-is-invalid">
+                    <input type="text" class="form-control is-invalid" name="projectname" placeholder="Введите название проекта" value="{{name}}" required>
+                    <div class="invalid-feedback">{{name_errors}}</div>
+                </div>
+            {{/name_errors}}
+            {{^name_errors}}
+                <input type="text" class="form-control" name="projectname" placeholder="Введите название проекта" value="{{name}}" required>
+            {{/name_errors}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Краткое описание проекта -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Краткое описание проекта:</h6>
+            <p class="font-italic mb-0">
+                Опишите в 2-3 предложениях суть проекта (какой предполагается результат, предпосылки)
+            </p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+            {{#description_errors}}<div class="form-field-is-invalid">{{/description_errors}}
+            <textarea name="description" class="form-control{{#description_errors}} is-invalid{{/description_errors}}" rows="3" style="resize: none" required {{#record_exists}}readonly{{/record_exists}}>{{description}}</textarea>
+            {{#description_errors}}<div class="invalid-feedback">{{description_errors}}</div></div>{{/description_errors}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <!-- ФИО руководителя проекта -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">ФИО руководителя проекта:</h6>
+            <p class="font-italic mb-0">По умолчанию в поле отображаются инициалы подающего заявку</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+        {{#manager_errors}}
+            <div class="form-field-is-invalid">
+                <input type="text" id="rp-autocomplete-el" class="form-control is-invalid" placeholder="Руководитель проекта" value="{{manager}}" required>
+                <input type="hidden" id="rp-autocomplete-id" name="projectmanagerid" value="{{manager_id}}">
+                <div class="invalid-feedback">{{manager_errors}}</div>
+            </div>
+        {{/manager_errors}}
+        {{^manager_errors}}
+            <input type="text" id="rp-autocomplete-el" class="form-control" placeholder="Руководитель проекта" value="{{manager}}" required>
+            <input type="hidden" id="rp-autocomplete-id" name="projectmanagerid" value="{{manager_id}}">
+        {{/manager_errors}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <!-- E-mail руководителя проекта -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">E-mail руководителя проекта:</h6>
+            <p class="font-italic mb-0">
+                Введите актуальный адрес электронной почты, т.к. именно на него будут приходить оповещения о статусе заявки
+            </p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+            {{#manager_email_errors}}
+            <div class="form-field-is-invalid">
+                <input type="email" class="form-control is-invalid" name="projectmanageremail" placeholder="Укажите email руководителя проекта" value="{{manager_email}}" required>
+                <div class="invalid-feedback">{{manager_email_errors}}</div>
+            </div>
+            {{/manager_email_errors}}
+            {{^manager_email_errors}}
+            <input type="email" class="form-control" name="projectmanageremail" placeholder="Укажите email руководителя проекта" value="{{manager_email}}" required>
+            {{/manager_email_errors}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Номер группы руководителя проекта -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Номер группы руководителя проекта:</h6>
+            <p class="font-italic mb-0">Укажите номер группы, например, 13131/1</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+            {{#manager_group_errors}}
+            <div class="form-field-is-invalid">
+..
+                <div class="invalid-feedback">{{manager_group_errors}}</div>
+            </div>
+            {{/manager_group_errors}}
+            {{^manager_group_errors}}
+..
+            {{/manager_group_errors}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <!-- Предполагаемый наставник -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Предполагаемый наставник:</h6>
+            <p class="font-italic mb-0">
+...
+            </p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+...
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    {{#record_exists}}
+    {{#approved}}
+
+
+    <!-- Утвержденный заказчик Autocomplete mechanism -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Утвержденный заказчик:</h6>
+            <p class="font-italic mb-0">Описание для поля Утвержденный заказчик, необходимо придумать.</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            {{#approved_customer_errors}} 
+            <div class="form-field-is-invalid">
+                <input type="text" id="customer-autocomplete-el" class="form-control is-invalid" placeholder="Выберите заказчика" value="{{approved_customerfio}}">
+                <input type="hidden" id="customer-autocomplete-id" name="customerid" value="{{approved_customerid}}">
+                <div class="invalid-feedback">{{approved_customer_errors}}</div>
+            </div>
+            {{/approved_customer_errors}}
+
+            {{^approved_customer_errors}} 
+                <input type="text" id="customer-autocomplete-el" class="form-control" placeholder="Выберите заказчика" value="{{approved_customerfio}}">
+                <input type="hidden" id="customer-autocomplete-id" name="customerid" value="{{approved_customerid}}">
+            {{/approved_customer_errors}} 
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+
+
+    <!-- Утвержденный наставник Autocomplete mechanism -->
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Утвержденный наставник:</h6>
+            <p class="font-italic mb-0">Описание для поля Утвержденный наставник, необходимо придумать.</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+                {{#approved_mentor_errors}}
+                <div class="form-field-is-invalid">
+                    <input type="text" id="teacher-autocomplete-el" class="form-control is-invalid" placeholder="Выберите наставника" value="{{approved_mentor}}" required>
+                    <input type="hidden" id="teacher-autocomplete-id" name="approvedprojectmentorid" value="{{approved_mentor_id}}">
+                </div>
+                {{/approved_mentor_errors}}
+                {{^approved_mentor_errors}}
+                <input type="text" id="teacher-autocomplete-el" class="form-control" placeholder="Выберите наставника" value="{{approved_mentor}}" required>
+                <input type="hidden" id="teacher-autocomplete-id" name="approvedprojectmentorid" value="{{approved_mentor_id}}">
+                {{/approved_mentor_errors}}
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Участники:</h6>
+            <p class="font-italic mb-0">Список команды проекта</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <ul>
+            {{#participants}}
+                <li><a href="/user/profile.php?id={{id}}" target="_blank">{{lastname}} {{firstname}} {{middlename}}</a></li>
+            {{/participants}}
+            </ul>
+        </div>
+        <div class="col-12">
+            <div class="pt-3 border-bottom"></div>
+        </div>
+    </div>
+
+    {{^converted}}{{#can_convert}}
+    <div class="row mb-3">
+        <div class="col-6">
+            <h6 class="font-weight-bold">Шаблон курса:</h6>
+            <p class="font-italic mb-0">Эталонный курс, из которого будет создан курс проекта. По&nbsp;умолчанию выбран шаблон, соответствующий теме проекта.</p>
+        </div>
+        <div class="col-6 d-flex align-items-center">
+            <span class="badge badge-pill badge-danger mr-3" title="Обязательное поле">!</span>
+<select class="custom-select w-100" data-placeholder="Выберите шаблон" name="projectcoursetemplate" required>    
+
+    {{#templates}}
+                <option value="{{type}}" {{#selected}}selected{{/selected}}>{{type}}</option>
+    {{/templates}}
+
+</select>
+
+        </div>
+    </div>
+    {{/can_convert}}{{/converted}}
+    {{/approved}}
+    {{/record_exists}}
+
+    {{#record_exists}}
+    <!-- Submit button -->
+    <div class="row mb-3">
+        <div class="col-6 text-left pt-4">
+            <button type="submit" name="save" class="btn btn-info">Сохранить</button>
+            <a href="{{{returnurl}}}" class="btn btn-secondary">Вернуться</a>
+        </div>
+        {{#approved}}
+        <div class="col-6 text-right pt-4">
+            {{^converted}}{{#can_convert}}
+            <button type="submit" name="converted" class="btn btn-success">Создать курс проект</button>
+            {{/can_convert}}{{/converted}}
+            <button type="submit" name="disband" class="btn btn-danger" formnovalidate>Расформировать проект</button>
+        </div>
+        {{/approved}}
+        {{^approved}}
+        <div class="col-6 text-right pt-4">
+            <button type="submit" name="approved" class="btn btn-success">Одобрить</button>
+            <button type="submit" name="rejected" class="btn btn-danger">Отклонить</button>
+        </div>
+        {{/approved}}
+    </div>
+    {{/record_exists}}
+
+    {{^record_exists}}
+    <!-- Submit button -->
+    <div class="row mb-3">
+        <div class="col-12 text-center pt-4">
+            <button type="submit" class="btn btn-success btn-lg" {{#disable_submit}}disabled{{/disable_submit}}>Подать заявку</button>
+        </div>
+    </div>
+    {{/record_exists}}
+</form>

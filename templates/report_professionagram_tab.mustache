@@ -1,0 +1,37 @@
+<div class="analytics-tab">
+    <div class="row analytic-tab-content">
+    <div class="professionagram-subj-selector col-md-12 col-lg-4 col-xl-4 noselect">
+        <div class="professionagram-streams-container">
+            <select id="professionagram-streams" class="w-100">
+                {{#streams}}
+                    <option value="{{id}}" {{#chosen}}selected{{/chosen}}>{{name}}</option>
+                {{/streams}}
+            </select>
+        </div>
+        <ul>
+        {{#projects}}
+            <li class="professionagram-project" data-rid="{{rid}}"><span><span class="professionagram-project-code">{{code}}</span> {{projectname}}</span>
+            <ul class="professionagram-participant-container">
+            {{#students}}<li class="professionagram-project-participant" data-rid="{{rid}}" data-uid="{{uid}}">{{name}}</li>{{/students}}
+            </ul>
+            </li>
+        {{/projects}}
+        </ul>
+        {{^projects}}Проекты не найдены{{/projects}}
+    </div>
+    <div class="professionagram-chart-container col-md-12 col-lg-8 col-xl-8">
+        <div id="professionagram-chart">Выберите проект или студента для отображения профессионаграммы</div>
+    </div>
+
+    <!-- Analytic tab content loader -->
+    <div id="analytic-tc-loader" class="analytic-tc-loader">
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
+    </div>
+    </div>
+</div>
